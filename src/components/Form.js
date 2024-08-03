@@ -1,8 +1,22 @@
 import React from "react";
+import { useState } from "react";
 
 export default function Form(props) {
+
+  const [name, setName] = useState("");
+
+  function handelChange(event){
+    setName(event.target.value);
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    props.onSubmit(name);
+    setName("");
+  }
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <h2 className="label-wrapper">
         <label htmlFor="new-todo-input" className="label__lg">
           What needs to be done?
@@ -14,6 +28,8 @@ export default function Form(props) {
         className="input input__lg"
         name="text"
         autoComplete="off"
+        value={name}
+        onChange={handelChange}
       />
       <button type="submit" className="btn btn__primary btn__lg">
         Add
