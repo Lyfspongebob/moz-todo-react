@@ -3,23 +3,10 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 
-const DATA = [
-  { id: "todo-0", name: "Eat", completed: true },
-  { id: "todo-1", name: "Sleep", completed: false },
-  { id: "todo-2", name: "Repeat", completed: false },
-];
-
-const SELECT =[
-  {name: "All", id: "filterButton-0"},
-  {name: "Active", id: "filterButton-1"},
-  {name: "Completed", id: "filterButton-2"},
-];
-
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App tasks={DATA} selects={SELECT}/>
+    <App />
   </React.StrictMode>
 );
 
