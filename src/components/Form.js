@@ -1,9 +1,14 @@
-import React from "react";
-import { useState } from "react";
+import React, { useEffect } from "react";
+import { useState, useRef } from "react";
 
 export default function Form(props) {
 
   const [name, setName] = useState("");
+  // const inputRef = useRef(null);
+
+  // useEffect(() => {
+  //   inputRef.current.focus();
+  // });
 
   function handelChange(event){
     setName(event.target.value);
@@ -29,6 +34,7 @@ export default function Form(props) {
         name="text"
         autoComplete="off"
         value={name}
+        // ref={inputRef}
         onChange={handelChange}
       />
       <button type="submit" className="btn btn__primary btn__lg">
