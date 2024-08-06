@@ -16,7 +16,7 @@ export default function Todo(props) {
     useEffect(() => {
       ref.current = value;
     });//这个uesEffect()没有加数组,默认当前组件刷新的时候执行
-    //如果是个[]空数组，只在第一次执行 
+    //如果是个[]空数组，只在函数第一次渲染时执行 
     return ref.current;
   }
 
