@@ -8,9 +8,19 @@ export default function App(props) {
 
   const [tasks, setTasks] = useState([]);
   const [filter, setFilter] = useState("All");
+  const [editCount, setEditCount] = useState(0)
 
   const listHeadingRef = useRef(null);
   const prevTaskLength = usePrevious(tasks.length);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/todo/all").then(
+      (res) => {
+        return res.json();
+      }).then((todos) => {
+        setTasks(todos);
+      })
+  }, [editCount])
 
   function usePrevious(value) {
     const ref = useRef();
@@ -21,10 +31,10 @@ export default function App(props) {
   }
 
   useEffect(() => {
-    if(tasks.length < prevTaskLength){
+    if (tasks.length < prevTaskLength) {
       listHeadingRef.current.focus();
     }
-  },[tasks.length, listHeadingRef]);
+  }, [tasks.length, listHeadingRef]);
 
   const FILTER_MAP = {
     All: () => true,
@@ -40,10 +50,23 @@ export default function App(props) {
       setFilter={setFilter} />
   ));
 
+  //One method just takes the parameters after the requested API(Application Programming Interface).
   function addTask(name) {
-    const newTask = { id: `todo-${nanoid()}`, name, completed: false };
-    setTasks([...tasks, newTask]);
+    fetch("http://localhost:8080/todo/add?name=" + name + "&completed=false", { method: "post"}).then((res) => {
+      console.log(res.text());
+      setEditCount(editCount+1);
+    } )
   }
+
+
+  // This method directly write the parameters in body. Using JSON.stringify().
+  // function addTask(name) {
+  //   fetch("http://localhost:8080/todo/add2?name=", { method: "post" , body: JSON.stringify({name: name, compeleted: false})}).then((res) => {
+  //     console.log(res.text());
+  //     setEditCount(editCount + 1);
+  //   })
+  // }
+
 
   //勾选框
   function toggleTaskCompleted(id) {
